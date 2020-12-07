@@ -66,9 +66,11 @@ Dieses Software-Paket ist ein Plugin-Modul für Isomer: https://isomer.eu
     entry_points="""[isomer.components]
     leerstandsmeldermanager=isomer.leerstandsmelder.leerstandsmeldermanager:leerstandsmelderManager
     [isomer.schemata]
-    leerstandsmelderobject=isomer.leerstandsmelder.leerstandsmelderobject:leerstandsmelderObject
+    location=isomer.leerstandsmelder.location:location
+    region=isomer.leerstandsmelder.region:region
     [isomer.provisions]
-    leerstandsmelderobject=isomer.leerstandsmelder.provisions.leerstandsmelderobject:provision
+    location=isomer.leerstandsmelder.provisions.location:provision
+    region=isomer.leerstandsmelder.provisions.region:provision
     """,
     test_suite="tests.main.main",
 )
