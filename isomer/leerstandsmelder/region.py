@@ -23,52 +23,42 @@ __author__ = "Heiko 'riot' Weinen"
 __license__ = "AGPLv3"
 
 """
-Schema: leerstandsmelderobject
-==============================
+Schema: region
+==============
 
 Contains
 --------
 
-leerstandsmelderobject: Sample structure to adapt to your own use cases
+region: combines groups of moderators with region-local locations and other meta data
 
 
 """
 
 from isomer.schemata.defaultform import *
-from isomer.schemata.base import base_object
+from isomer.schemata.base import base_object, uuid_object, geo_coordinate
 
-leerstandsmelderobjectSchema = base_object('leerstandsmelderobject')
+regionSchema = base_object('region', no_additional=True)
 
-leerstandsmelderobjectSchema['properties'].update({
-    'text': {
-        'type': 'string', 'title': 'Some Text',
-        'description': 'Sample Text Field'
+
+regionSchema['properties'].update({
+    'title': {'type': 'string'},
+    'description': {'type': 'string'},
+    'zoom': {'type': 'integer', 'max': 16, 'min': 5},
+    'coordinate': geo_coordinate(),
+    'moderators': {
+        'type': 'array',
+        'items': uuid_object('user'),
     },
-    'number': {
-        'type': 'integer', 'title': 'Some Integer',
-        'description': 'Sample Integer Field'
-    },
-    'enum': {
-        'type': 'string',
-        'enum': [
-            'Turtles', 'Lions', 'Hippos', 'Monkeys'
-        ],
-        'title': 'Some Enum',
-        'description': 'Sample Enum Field'
-    },
-    'secret': {
-        'type': 'string', 'title': 'Very Secret',
-        'description': 'Sample Secret Field',
-        'default': ''
-    },
-    'timestamp': {
-        'type': 'string', 'format': 'datetimepicker',
-        'title': 'Some Datetime',
-        'description': 'Sample Datetime Field'
-    }
+    'active': {'type': 'boolean'},
+    'hide': {'type': 'boolean'},
+    'hide_message': {'type': 'string'},
+    'slug': {'type': 'string'},
+    'slug_aliases': {'type': 'string'},
+    'created': {'type': 'string', 'format': 'datetime'},
+    'updated': {'type': 'string', 'format': 'datetime'},
 })
 
-leerstandsmelderobjectForm = [
+regionForm = [
     {
         'type': 'section',
         'htmlClass': 'row',
@@ -89,11 +79,10 @@ leerstandsmelderobjectForm = [
             },
         ]
     },
-    'secret',
     editbuttons
 ]
 
-leerstandsmelderObject = {
-    'schema': leerstandsmelderobjectSchema,
-    'form': leerstandsmelderobjectForm
+region = {
+    'schema': regionSchema,
+    'form': regionForm
 }
